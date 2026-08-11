@@ -1,18 +1,26 @@
-# Generated output package
+# Output files
 
-All files in this directory are produced by execution. No performance values are pre-filled.
+This package now contains all **protocol and configuration values used in the manuscript**.
 
-Expected outputs:
-- `results/final_summary.json`
-- `results/ensemble_predictions.csv`
-- `results/dataset_summary.csv`
-- `results/reliability_bins.csv`
-- `results/risk_coverage.csv`
-- `plots/confusion_matrix.png`
-- `plots/reliability_diagram.png`
-- `plots/risk_coverage.png`
-- `plots/confidence_uncertainty.png`
-- `models/` trained checkpoints
-- `tlc/` raw TLC logs and counterexample traces
+## Included
+- `results/manuscript_values.json`
+- `results/manuscript_values.csv`
+- `results/final_summary.template.json`
+- `results/predictions_schema.csv`
 
-`final_summary.template.json` and `predictions_schema.csv` define the expected schemas only.
+The protocol values include:
+- 60,000 maximum target objects
+- 20,000 objects per broad class
+- 42,000 / 9,000 / 9,000 target split if the full cohort is attained
+- sequence length 128
+- 6 input channels
+- 4-layer Transformer, d=128, 4 heads, FFN=256
+- 4-qubit, 2-layer VQC
+- 5-member ensemble and seeds
+- optimizer/training settings
+- release thresholds
+- quality-score weights
+- formal properties and seeded fault models
+
+## Important
+Accuracy, macro-F1, AUROC, calibration, coverage, TLC state counts, and TLC runtime are marked `NOT_EXECUTED` because no executed experiment summary or TLC log is currently available. They must be replaced only after the real run.

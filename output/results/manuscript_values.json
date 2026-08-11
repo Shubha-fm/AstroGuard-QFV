@@ -1,0 +1,127 @@
+{
+  "status": "PROTOCOL_CONFIGURATION_ONLY",
+  "note": "These values are taken directly from the manuscript protocol/configuration. They are not executed predictive or TLC measurements.",
+  "dataset_protocol": {
+    "maximum_target_objects": 60000,
+    "target_per_broad_class": 20000,
+    "broad_classes": 3,
+    "train_fraction": 0.7,
+    "validation_fraction": 0.15,
+    "test_fraction": 0.15,
+    "target_train_objects_if_full_cohort_attained": 42000,
+    "target_validation_objects_if_full_cohort_attained": 9000,
+    "target_test_objects_if_full_cohort_attained": 9000,
+    "minimum_valid_detections": 20,
+    "maximum_sequence_length": 128,
+    "input_channels": 6
+  },
+  "class_mapping": {
+    "Transient": [
+      "SN",
+      "SNIa",
+      "SNIbc",
+      "SNII"
+    ],
+    "Periodic": [
+      "Periodic-Other",
+      "RR Lyrae",
+      "Eclipsing Binary",
+      "LPV"
+    ],
+    "Stochastic": [
+      "AGN",
+      "QSO",
+      "Blazar",
+      "YSO"
+    ]
+  },
+  "transformer": {
+    "layers": 4,
+    "model_dimension": 128,
+    "attention_heads": 4,
+    "feedforward_dimension": 256,
+    "dropout": 0.15
+  },
+  "loss": {
+    "masked_reconstruction_weight": 0.1,
+    "contrastive_weight": 0.1,
+    "classification_weight": 0.8
+  },
+  "quantum": {
+    "qubits": 4,
+    "variational_layers": 2,
+    "quantum_features": 4,
+    "fused_dimension": 132
+  },
+  "ensemble": {
+    "members": 5,
+    "seeds": [
+      42,
+      142,
+      242,
+      342,
+      442
+    ],
+    "weighting": "validation macro-F1"
+  },
+  "training": {
+    "optimizer": "AdamW",
+    "learning_rate": 0.0003,
+    "weight_decay": 1e-05,
+    "batch_size": 32,
+    "maximum_epochs": 40,
+    "early_stopping_patience": 8,
+    "gradient_clipping": 1.0
+  },
+  "release_gate_initial_configuration": {
+    "confidence_threshold": 0.5,
+    "epistemic_uncertainty_threshold": 0.1,
+    "quality_threshold": 0.3
+  },
+  "quality_score_weights": {
+    "observation_coverage": 0.5,
+    "photometric_error": 0.35,
+    "band_coverage": 0.15
+  },
+  "formal_model": {
+    "stages": [
+      "Received",
+      "Inferencing",
+      "Assessed",
+      "Retry",
+      "Released",
+      "Review",
+      "Withheld"
+    ],
+    "properties": [
+      "TypeOK",
+      "NoUnsafeRelease",
+      "NoStaleRelease",
+      "RetryInvalidatesAssessment",
+      "ObjectIsolation",
+      "AssessedProgress"
+    ],
+    "fault_models": [
+      "Gate bypass",
+      "Stale release after model reload",
+      "Retry preserves old decision",
+      "Cross-object decision contamination"
+    ]
+  },
+  "measured_results": {
+    "accuracy": "NOT_EXECUTED",
+    "balanced_accuracy": "NOT_EXECUTED",
+    "macro_precision": "NOT_EXECUTED",
+    "macro_recall": "NOT_EXECUTED",
+    "macro_f1": "NOT_EXECUTED",
+    "macro_auroc": "NOT_EXECUTED",
+    "ece": "NOT_EXECUTED",
+    "brier_score": "NOT_EXECUTED",
+    "coverage": "NOT_EXECUTED",
+    "released_accuracy": "NOT_EXECUTED",
+    "selective_risk": "NOT_EXECUTED",
+    "error_detection_auroc": "NOT_EXECUTED",
+    "tlc_distinct_states": "NOT_EXECUTED",
+    "tlc_runtime_seconds": "NOT_EXECUTED"
+  }
+}
