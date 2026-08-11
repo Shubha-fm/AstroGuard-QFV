@@ -236,24 +236,6 @@ output/models/
 output/tlc/
 ```
 
-## Generate LaTeX Result Macros
-
-After `final_summary.json` is available, run:
-
-```bash
-python programs/generate_results_macros.py
-```
-
-This creates manuscript-ready LaTeX macros from one machine-readable source and reduces the risk of inconsistent values across the abstract, tables, discussion, and conclusion.
-
-## Reproducibility Policy
-
-The following distinction is important:
-
-- **Protocol/configuration values** describe the planned system and experiment.
-- **Measured values** must be produced by execution.
-
-No accuracy, F1, AUROC, calibration, selective-release, or TLC performance value should be entered manually and presented as an executed result.
 
 ## Manuscript Repository
 
@@ -271,14 +253,5 @@ The University of Burdwan, West Bengal, India
 Department of Computer Science  
 The University of Burdwan, West Bengal, India
 
-## Citation
 
-If you use this repository, please cite the associated manuscript:
 
-> Shubha Chakraborty and Rahul Karmakar.  
-> *AstroGuard-QFV: Hybrid Quantum–Transformer Classification of ZTF Light Curves with Formally Verified Release Semantics.*  
-> Submitted to *Astronomy and Computing*.
-
-## Research-Integrity Note
-
-This repository is designed so that protocol targets and manuscript configuration values remain distinct from measured evidence. Final journal claims should be traceable to archived input manifests, prediction files, model checkpoints, and TLC logs.
