@@ -1,0 +1,48 @@
+experiment:
+  name: AstroGuard-QFV
+  seed: 42
+  target_per_class: 20000
+  maximum_target_objects: 60000
+  split:
+    train: 0.70
+    validation: 0.15
+    test: 0.15
+
+data:
+  survey: ztf
+  broker: ALeRCE
+  minimum_observations: 20
+  maximum_sequence_length: 128
+  input_channels: 6
+  oversampling_factor: 1.60
+  query_batch_size: 500
+
+model:
+  transformer_layers: 4
+  model_dimension: 128
+  attention_heads: 4
+  feedforward_dimension: 256
+  dropout: 0.15
+  projection_dimension: 64
+  qubits: 4
+  quantum_layers: 2
+
+training:
+  batch_size: 32
+  epochs: 40
+  patience: 8
+  learning_rate: 0.0003
+  weight_decay: 0.00001
+  loss_weights:
+    reconstruction: 0.10
+    contrastive: 0.10
+    classification: 0.80
+  ensemble_seeds: [42, 142, 242, 342, 442]
+
+release_gate:
+  confidence_threshold: 0.50
+  uncertainty_threshold: 0.10
+  quality_threshold: 0.30
+
+reporting:
+  note: "Protocol values are not measured outcomes. Populate results only from executed artifacts."

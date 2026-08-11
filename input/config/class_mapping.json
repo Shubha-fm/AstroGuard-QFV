@@ -1,0 +1,20 @@
+{
+  "Transient": [
+    "SN",
+    "SNIa",
+    "SNIbc",
+    "SNII"
+  ],
+  "Periodic": [
+    "Periodic-Other",
+    "RR Lyrae",
+    "Eclipsing Binary",
+    "LPV"
+  ],
+  "Stochastic": [
+    "AGN",
+    "QSO",
+    "Blazar",
+    "YSO"
+  ]
+}

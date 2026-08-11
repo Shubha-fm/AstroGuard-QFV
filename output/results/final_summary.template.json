@@ -1,0 +1,40 @@
+{
+  "status": "NOT_EXECUTED",
+  "dataset": {
+    "candidate_objects": null,
+    "duplicates_removed": null,
+    "conflicting_labels_removed": null,
+    "insufficient_detections_removed": null,
+    "missing_fields_removed": null,
+    "total": null,
+    "train": null,
+    "validation": null,
+    "test": null
+  },
+  "ensemble": {
+    "accuracy": null,
+    "balanced_accuracy": null,
+    "macro_precision": null,
+    "macro_recall": null,
+    "macro_f1": null,
+    "macro_auroc": null,
+    "ece": null,
+    "brier_score": null,
+    "error_detection_auroc": null
+  },
+  "runtime_assurance": {
+    "released_objects": null,
+    "coverage": null,
+    "released_accuracy": null,
+    "selective_risk": null,
+    "unsafe_release_rate": null
+  },
+  "formal_verification": {
+    "corrected_distinct_states": null,
+    "no_unsafe_release": null,
+    "no_stale_release": null,
+    "retry_invalidates_assessment": null,
+    "object_isolation": null,
+    "assessed_progress": null
+  }
+}

@@ -1,0 +1,11 @@
+Program files:
+- astroguard_qfv.py              Main 60,000-object maximum-target experiment
+- astroguard_qfv_fast_12000.py   Reduced-cost 12,000-object pilot
+- generate_results_macros.py     Converts executed JSON results to LaTeX macros
+- run_experiment.sh              Shell launcher for the main Python experiment
+- run_tlc.sh                     Shell launcher for TLC
+- AstroGuardQFV.tla              TLA+ workflow specification
+- AstroGuardQFV.cfg              TLC configuration
+
+Input files are under ../input/.
+Generated outputs should be written under ../output/.
