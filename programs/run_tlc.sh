@@ -7,4 +7,7 @@ if [[ ! -f "$JAR" ]]; then
   exit 2
 fi
 mkdir -p "$ROOT/output/tlc"
-java -cp "$JAR" tlc2.TLC   -config "$ROOT/formal/AstroGuardQFV.cfg"   "$ROOT/formal/AstroGuardQFV.tla"   | tee "$ROOT/output/tlc/corrected_model.log"
+java -cp "$JAR" tlc2.TLC \
+  -config "$ROOT/programs/AstroGuardQFV.cfg" \
+  "$ROOT/programs/AstroGuardQFV.tla" \
+  | tee "$ROOT/output/tlc/corrected_model.log"
