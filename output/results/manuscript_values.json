@@ -1,6 +1,6 @@
 {
-  "status": "PROTOCOL_CONFIGURATION_ONLY",
-  "note": "These values are taken directly from the manuscript protocol/configuration. They are not executed predictive or TLC measurements.",
+  "status": "CONFIGURATION_AND_PROTOCOL_ONLY",
+  "note": "This file records protocol and configuration values only. It intentionally does not contain executed predictive or TLC measurements. Executed results must be stored in separate machine-readable result files generated from actual runs.",
   "dataset_protocol": {
     "maximum_target_objects": 60000,
     "target_per_broad_class": 20000,
@@ -39,8 +39,7 @@
     "layers": 4,
     "model_dimension": 128,
     "attention_heads": 4,
-    "feedforward_dimension": 256,
-    "dropout": 0.15
+    "feedforward_dimension": 256
   },
   "loss": {
     "masked_reconstruction_weight": 0.1,
@@ -73,11 +72,6 @@
     "early_stopping_patience": 8,
     "gradient_clipping": 1.0
   },
-  "release_gate_initial_configuration": {
-    "confidence_threshold": 0.5,
-    "epistemic_uncertainty_threshold": 0.1,
-    "quality_threshold": 0.3
-  },
   "quality_score_weights": {
     "observation_coverage": 0.5,
     "photometric_error": 0.35,
@@ -93,35 +87,22 @@
       "Review",
       "Withheld"
     ],
-    "properties": [
+    "checked_properties": [
       "TypeOK",
       "NoUnsafeRelease",
-      "NoStaleRelease",
+      "FreshRelease",
       "RetryInvalidatesAssessment",
-      "ObjectIsolation",
-      "AssessedProgress"
+      "ObjectIsolation"
     ],
-    "fault_models": [
+    "fault_models_described_in_manuscript": [
       "Gate bypass",
       "Stale release after model reload",
       "Retry preserves old decision",
       "Cross-object decision contamination"
     ]
   },
-  "measured_results": {
-    "accuracy": "NOT_EXECUTED",
-    "balanced_accuracy": "NOT_EXECUTED",
-    "macro_precision": "NOT_EXECUTED",
-    "macro_recall": "NOT_EXECUTED",
-    "macro_f1": "NOT_EXECUTED",
-    "macro_auroc": "NOT_EXECUTED",
-    "ece": "NOT_EXECUTED",
-    "brier_score": "NOT_EXECUTED",
-    "coverage": "NOT_EXECUTED",
-    "released_accuracy": "NOT_EXECUTED",
-    "selective_risk": "NOT_EXECUTED",
-    "error_detection_auroc": "NOT_EXECUTED",
-    "tlc_distinct_states": "NOT_EXECUTED",
-    "tlc_runtime_seconds": "NOT_EXECUTED"
+  "executed_results": {
+    "location": "Store actual run outputs in separate files such as final_summary.json and TLC log files.",
+    "included_here": false
   }
 }
