@@ -42,7 +42,8 @@ Infer(o) ==
   /\ stage' = [stage EXCEPT ![o] = "Inferencing"]
   /\ decision' = [decision EXCEPT ![o] = "None"]
   /\ UNCHANGED <<modelVersion, assessedVersion,
-                 confidenceOK, uncertaintyOK, qualityOK, sourceOK, retryCount>>
+                 confidenceOK, uncertaintyOK, qualityOK, sourceOK,
+                 retryCount>>
 
 Assess(o) ==
   /\ stage[o] = "Inferencing"
@@ -75,27 +76,41 @@ ReloadModel ==
 Release(o) ==
   /\ stage[o] = "Assessed"
   /\ assessedVersion[o] = modelVersion
-  /\ confidenceOK[o] /\ uncertaintyOK[o] /\ qualityOK[o] /\ sourceOK[o]
+  /\ confidenceOK[o]
+  /\ uncertaintyOK[o]
+  /\ qualityOK[o]
+  /\ sourceOK[o]
   /\ stage' = [stage EXCEPT ![o] = "Released"]
   /\ decision' = [decision EXCEPT ![o] = "Release"]
   /\ UNCHANGED <<modelVersion, assessedVersion,
-                 confidenceOK, uncertaintyOK, qualityOK, sourceOK, retryCount>>
+                 confidenceOK, uncertaintyOK, qualityOK, sourceOK,
+                 retryCount>>
 
 Review(o) ==
   /\ stage[o] = "Assessed"
-  /\ ~(confidenceOK[o] /\ uncertaintyOK[o] /\ qualityOK[o] /\ sourceOK[o])
+  /\ sourceOK[o]
+  /\ ~(confidenceOK[o] /\ uncertaintyOK[o] /\ qualityOK[o])
   /\ stage' = [stage EXCEPT ![o] = "Review"]
   /\ decision' = [decision EXCEPT ![o] = "Review"]
   /\ UNCHANGED <<modelVersion, assessedVersion,
-                 confidenceOK, uncertaintyOK, qualityOK, sourceOK, retryCount>>
+                 confidenceOK, uncertaintyOK, qualityOK, sourceOK,
+                 retryCount>>
+
+Withhold(o) ==
+  /\ stage[o] = "Assessed"
+  /\ ~sourceOK[o]
+  /\ stage' = [stage EXCEPT ![o] = "Withheld"]
+  /\ decision' = [decision EXCEPT ![o] = "Withhold"]
+  /\ UNCHANGED <<modelVersion, assessedVersion,
+                 confidenceOK, uncertaintyOK, qualityOK, sourceOK,
+                 retryCount>>
+
+ObjectLocalAction(o) ==
+  Infer(o) \/ Assess(o) \/ Retry(o) \/ Release(o) \/ Review(o) \/ Withhold(o)
 
 Next ==
-  \/ \E o \in Objects: Infer(o)
-  \/ \E o \in Objects: Assess(o)
-  \/ \E o \in Objects: Retry(o)
+  \/ \E o \in Objects: ObjectLocalAction(o)
   \/ ReloadModel
-  \/ \E o \in Objects: Release(o)
-  \/ \E o \in Objects: Review(o)
 
 Spec == Init /\ [][Next]_vars
 
@@ -104,12 +119,28 @@ NoUnsafeRelease ==
     decision[o] = "Release" =>
       (confidenceOK[o] /\ uncertaintyOK[o] /\ qualityOK[o] /\ sourceOK[o])
 
-NoStaleRelease ==
+FreshReleaseAction ==
   \A o \in Objects:
-    decision[o] = "Release" => assessedVersion[o] = modelVersion
+    ((decision'[o] = "Release") /\ (decision[o] # "Release")) =>
+      assessedVersion[o] = modelVersion
 
-RetryInvalidatesAssessment ==
+FreshRelease == [][FreshReleaseAction]_vars
+
+RetryInvalidatesAssessmentAction ==
   \A o \in Objects:
-    stage[o] = "Retry" => decision[o] # "Release"
+    ((stage'[o] = "Retry") /\ (stage[o] # "Retry")) =>
+      ((assessedVersion'[o] = 0) /\ (decision'[o] = "None"))
+
+RetryInvalidatesAssessment == [][RetryInvalidatesAssessmentAction]_vars
+
+Local(o) ==
+  <<stage[o], assessedVersion[o], confidenceOK[o], uncertaintyOK[o],
+    qualityOK[o], sourceOK[o], retryCount[o], decision[o]>>
+
+ObjectIsolationAction ==
+  \A o1, o2 \in Objects:
+    ((o1 # o2) /\ ObjectLocalAction(o1)) => UNCHANGED Local(o2)
+
+ObjectIsolation == [][ObjectIsolationAction]_vars
 
 =============================================================================
