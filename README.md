@@ -1,23 +1,23 @@
 # AstroGuard-QFV
 
-**Hybrid Quantum–Transformer Classification of ZTF Light Curves with Formally Verified Release Semantics**
+**Trustworthy Quantum–Classical Learning for Astronomical Time-Series Classification with Formal Release Assurance**
 
-This repository contains the software, input configuration, output structure, and TLA+ verification artifacts associated with the *Astronomy and Computing* manuscript:
+This repository provides supporting implementation, configuration, output-schema, and formal-model resources associated with the *Astronomy and Computing* manuscript:
 
-> **AstroGuard-QFV: Hybrid Quantum–Transformer Classification of ZTF Light Curves with Formally Verified Release Semantics**
+> **AstroGuard-QFV: Trustworthy Quantum–Classical Learning for Astronomical Time-Series Classification with Formal Release Assurance**
 
 ## Overview
 
-AstroGuard-QFV is an assurance-oriented framework for classifying Zwicky Transient Facility (ZTF) light curves. It combines:
+AstroGuard-QFV is a trustworthy astronomical time-series classification framework for Zwicky Transient Facility (ZTF) light curves. It combines:
 
 - a Transformer for irregular astronomical time-series representation;
-- a residual four-qubit variational quantum feature map;
-- a parameter-matched classical bottleneck for controlled comparison;
+- a residual four-qubit variational quantum feature branch;
+- a parameter-matched classical residual control;
 - a five-member deep ensemble for uncertainty estimation;
-- selective prediction using confidence, uncertainty, data quality, and source-validity conditions; and
-- TLA+ specifications for verifying release semantics under concurrency, retries, model-version changes, and stale assessments.
+- selective prediction using confidence, uncertainty, observational quality, and source-consistency conditions; and
+- TLA+ release-workflow modeling for concurrency, retries, model-version changes, stale assessments, and cross-object interference.
 
-The framework separates **predictive evidence** from **workflow assurance**. TLA+ verifies the release-control logic; it does not prove the correctness of the neural or quantum classifier.
+The framework deliberately separates **predictive evidence** from **workflow assurance**. TLA+ constrains the stateful release-control logic; it does not prove the correctness of the learned classifier.
 
 ## Repository Structure
 
@@ -35,19 +35,11 @@ AstroGuard-QFV/
 │
 ├── input/
 │   ├── config/
-│   │   ├── experiment.yaml
-│   │   └── class_mapping.json
 │   ├── manifests/
-│   │   └── object_manifest_template.csv
 │   └── README/
-│       └── README_INPUT.md
 │
 └── output/
     ├── results/
-    │   ├── manuscript_values.json
-    │   ├── manuscript_values.csv
-    │   ├── final_summary.template.json
-    │   └── predictions_schema.csv
     ├── plots/
     ├── models/
     ├── tlc/
@@ -56,7 +48,7 @@ AstroGuard-QFV/
 
 ## Dataset Protocol
 
-The large-scale protocol targets a maximum of **60,000 ZTF objects**, balanced across three broad classes:
+The large-scale protocol targets a maximum of **60,000 ZTF objects**, balanced across three broad classes.
 
 | Broad class | Included subclasses | Maximum target |
 |---|---|---:|
@@ -64,13 +56,13 @@ The large-scale protocol targets a maximum of **60,000 ZTF objects**, balanced a
 | Periodic | Periodic-Other, RR Lyrae, EB, LPV | 20,000 |
 | Stochastic | AGN, QSO, Blazar, YSO | 20,000 |
 
-If the maximum cohort is fully attained, the planned object-disjoint split is:
+When the full cohort is attained, the object-disjoint split is:
 
 - Training: 42,000 objects
 - Validation: 9,000 objects
 - Test: 9,000 objects
 
-These are **protocol targets**, not automatically executed counts. The exact cohort used in a study must be recorded in the final object manifest.
+Exact executed object identities and split assignments should be preserved in a fixed manifest because ALeRCE is a live service.
 
 ## Main Model Configuration
 
@@ -80,7 +72,6 @@ These are **protocol targets**, not automatically executed counts. The exact coh
 - Model dimension: 128
 - Attention heads: 4
 - Feed-forward dimension: 256
-- Dropout: 0.15
 - Quantum circuit: 4 qubits
 - Variational layers: 2
 - Fused feature dimension: 132
@@ -95,21 +86,7 @@ The multi-objective training loss is:
 + 0.80 × supervised classification
 ```
 
-## Initial Release-Gate Configuration
-
-The initial validation configuration is:
-
-```text
-confidence threshold       = 0.50
-epistemic uncertainty max  = 0.10
-quality threshold          = 0.30
-```
-
-Final thresholds should be selected using validation data only.
-
 ## Installation
-
-Recommended environment:
 
 ```bash
 python -m venv .venv
@@ -118,130 +95,72 @@ pip install alerce numpy pandas torch scikit-learn pennylane \
     pennylane-lightning matplotlib tqdm PyYAML
 ```
 
-TLA+ model checking additionally requires Java and the TLA+ tools JAR.
+TLA+ model checking additionally requires Java and `tla2tools.jar`.
 
 ## Run the Main Experiment
-
-From the repository root:
 
 ```bash
 python programs/astroguard_qfv.py
 ```
 
-A reduced-cost pilot is also provided:
+A reduced-cost implementation is also available for debugging and pilot runs:
 
 ```bash
 python programs/astroguard_qfv_fast_12000.py
 ```
 
-The fast version uses a smaller cohort for debugging and preliminary validation. Results from the pilot should not be reported as large-scale results unless the manuscript explicitly states that experimental scale.
+Pilot outputs must not be presented as the large-scale evaluation unless the manuscript explicitly uses that scale.
 
-## Run TLA+ / TLC
+## TLA+ / TLC Model
 
-Set the path to `tla2tools.jar`, then run:
+The corrected specification is in:
 
-```bash
-TLA2TOOLS_JAR=/path/to/tla2tools.jar bash programs/run_tlc.sh
+```text
+programs/AstroGuardQFV.tla
+programs/AstroGuardQFV.cfg
 ```
 
-The corrected specification checks release-control properties including:
+The final formal model checks:
 
 - `TypeOK`
 - `NoUnsafeRelease`
-- `NoStaleRelease`
+- `FreshRelease`
 - `RetryInvalidatesAssessment`
 - `ObjectIsolation`
-- `AssessedProgress`
 
-The formal evaluation should also include fault-injected variants for:
+`FreshRelease`, `RetryInvalidatesAssessment`, and `ObjectIsolation` are transition/action properties. The model includes explicit release, review, withholding, retry, model-reload, and concurrent object-local actions.
+
+The manuscript also evaluates deliberately faulty variants representing:
 
 1. gate bypass;
-2. stale release after model reload;
+2. stale release after a model reload;
 3. retry-state retention; and
 4. cross-object state contamination.
 
-Raw TLC logs should be saved under:
+Only executed TLC outputs should be placed under `output/tlc/` and reported as measured verification results.
 
-```text
-output/tlc/
-```
+## Reproducibility Policy
 
-## Input Files
+Files under `output/results/` distinguish configuration/protocol values from executed measurements.
 
-The `input/` folder contains configuration files and manifest schemas.
+**Do not treat protocol/configuration values as measured results.**
 
-The repository does **not** redistribute ZTF photometric data. Light curves are retrieved through public ALeRCE services.
+Measured quantities such as predictive metrics, calibration values, selective-prediction statistics, TLC state counts, and counterexample lengths should be populated only from executed experiment or verification artifacts.
 
-For reproducibility, archive the exact executed object manifest containing:
+## Data Availability
+
+ZTF detections are accessed through public ALeRCE services. This repository does not redistribute the underlying ZTF photometric data.
+
+For exact reproducibility, preserve the executed object manifest containing at least:
 
 - ZTF object ID;
 - original ALeRCE class;
 - broad class;
 - retrieval timestamp;
-- number of valid detections;
+- valid-detection count;
 - split assignment;
 - ALeRCE client/classifier version; and
 - preprocessing configuration hash.
-
-## Output Files
-
-The `output/` folder contains the expected output structure.
-
-Important files include:
-
-```text
-output/results/manuscript_values.json
-output/results/manuscript_values.csv
-output/results/final_summary.template.json
-output/results/predictions_schema.csv
-```
-
-`manuscript_values.json` contains protocol and configuration values used in the manuscript.
-
-Measured quantities such as:
-
-- accuracy;
-- balanced accuracy;
-- macro-precision;
-- macro-recall;
-- macro-F1;
-- AUROC;
-- ECE;
-- Brier score;
-- coverage;
-- released-set accuracy;
-- selective risk;
-- TLC state counts; and
-- TLC runtime
-
-must come from executed experiment and verification artifacts.
-
-## Expected Executed Outputs
-
-A complete journal experiment should generate:
-
-```text
-output/results/final_summary.json
-output/results/ensemble_predictions.csv
-output/results/dataset_summary.csv
-output/results/reliability_bins.csv
-output/results/risk_coverage.csv
-
-output/plots/confusion_matrix.png
-output/plots/reliability_diagram.png
-output/plots/risk_coverage.png
-output/plots/confidence_uncertainty.png
-
-output/models/
-output/tlc/
-```
-
-
-## Manuscript Repository
-
-GitHub:
-
-https://github.com/Shubha-fm/AstroGuard-QFV
 
 ## Authors
 
@@ -252,6 +171,3 @@ The University of Burdwan, West Bengal, India
 **Rahul Karmakar**  
 Department of Computer Science  
 The University of Burdwan, West Bengal, India
-
-
-
