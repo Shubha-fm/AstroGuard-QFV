@@ -1,6 +1,6 @@
 # AstroGuard-QFV: 18K astronomical time-series experiment
 
-Reproducibility code and compact evidence for **AstroGuard-QFV**, a quantum-classical and formal-assurance study of astronomical light-curve classification.
+Reproducibility code, with a linked research-data archive, for **AstroGuard-QFV**, a quantum-classical and formal-assurance study of astronomical light-curve classification.
 
 This repository contains the **fresh macOS 18,000-object experiment**. It replaces earlier prototype scripts and placeholder output tables. The 3 GB light-curve dataset, memory-mapped arrays, raw checkpoints, and optional model weights are intentionally **not stored in ordinary Git history**.
 
@@ -67,18 +67,22 @@ Running `query` or `collect` accesses the ALeRCE service and downloads real ligh
 
 The exact per-seed metrics, held-out predictions, early-prefix curves, quality sensitivity and verification logs are in the archived evidence files below. Report the actual 3,601-object test size, not a rounded 3,600.
 
-## Evidence files and provenance
+## Research data and experimental evidence
 
-The results archives have **not yet been uploaded to this repository**.
-The publication-ready archives are:
-- AstroGuard_QFV_18K_Collection_Summary.zip
-- AstroGuard_QFV_18K_Classical_Results.zip
-- AstroGuard_QFV_18K_Matched_Results.zip
+The project depositor provided this Zenodo record DOI:
 
-See `artifacts/SHA256SUMS.txt` to verify locally held copies.
-Raw photometry (~3 GB) is excluded from Git and awaits a permitted research-data deposit.
-This repository reports data-provider pseudolabel agreement, not independent ground truth.
+**[AstroGuard-QFV 18K research archive](https://doi.org/10.5281/zenodo.23770646) — DOI: `10.5281/zenodo.23770646`**
+
+This GitHub repository contains **source code**, not the full downloaded light curves or trained-model checkpoints. Consult the Zenodo record's file list to confirm exactly which archive version, light curves, intermediate arrays, predictions, verification logs, or reports it contains. The DOI is recorded here as supplied by the depositor; independent verification of the record's file inventory, license, and public access was not possible when this documentation was updated.
+
+Three locally retained report packages were named:
+
+- `AstroGuard_QFV_18K_Collection_Summary.zip`
+- `AstroGuard_QFV_18K_Classical_Results.zip`
+- `AstroGuard_QFV_18K_Matched_Results.zip`
+
+The locally generated hashes for those exact ZIP copies are recorded in [`artifacts/SHA256SUMS.txt`](artifacts/SHA256SUMS.txt). These hashes should **not** be used to validate a different, cleaned or repackaged archive. See [data availability and provenance](docs/DATA_AVAILABILITY.md) for source-label limitations and reuse conditions.
 
 ## Reuse and citation
 
-Source authorship and data-provider attribution should be retained in any derived work. No license is asserted by this cleanup; the authors should select and add an explicit code license before claiming unrestricted reuse. This repository is associated with a manuscript under revision, not an accepted or published article. Cite the data sources and this repository version when reusing experimental outputs.
+Source authorship and data-provider attribution should be retained in any derived work. No license is asserted by this cleanup; the authors should select and add an explicit code license before claiming unrestricted reuse. This repository is associated with a manuscript under revision, not an accepted or published article. Cite the original ZTF/ALeRCE data providers, the [Zenodo experimental record](https://doi.org/10.5281/zenodo.23770646), and the exact GitHub source revision when reusing experimental outputs. See [citation guidance](CITATION.md).
