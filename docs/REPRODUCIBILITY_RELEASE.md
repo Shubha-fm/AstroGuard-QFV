@@ -14,3 +14,5 @@ The repository records this DOI but does not automatically validate the remote d
 If corrections to published files are required, create a new Zenodo version and document the new version-specific DOI. Do not silently replace dataset metadata or imply that a DOI proves data-provider redistribution permission.
 
 The compiled manuscript and LaTeX sources are intentionally absent from the public software repository.
+
+The author's pre-upload size check on 29 October 2026 reported approximately 309 MB in `input/`, 1.4 GB in `RESULTS_18K/`, and a combined gzip archive of 521 MB. These are local filesystem figures, not a remote Zenodo file-size verification.
