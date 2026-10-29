@@ -1,0 +1,9 @@
+Use tlaplus/tlaplus official tla2tools.jar. Java 11+.
+Put the JAR outside the submission and set TLA2TOOLS_JAR to its path.
+Run in this folder:
+  java -cp "$TLA2TOOLS_JAR" tlc2.TLC -workers 1 -config AstroGuardActor.cfg AstroGuardActor.tla | tee Actor_corrected.log
+
+WARNING: TLC has NOT been run in this artifact build: the official tla2tools.jar
+was not available in the execution environment. The .tla has been source
+reviewed but has not passed a TLC syntax or model check.
+The independent_workflow_explorer.py results are Python results, NOT TLC results.

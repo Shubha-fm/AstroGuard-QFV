@@ -1,0 +1,149 @@
+{
+  "title": "AstroGuard-QFV fresh macOS 18K reviewer experiment",
+  "seed": 42,
+  "seeds": [
+    42,
+    142,
+    242,
+    342,
+    442
+  ],
+  "classes": [
+    "Periodic",
+    "Stochastic",
+    "Transient"
+  ],
+  "split": {
+    "train": 0.65,
+    "val": 0.15,
+    "test": 0.2
+  },
+  "min_detections": 20,
+  "max_sequence": 128,
+  "prefixes": [
+    2,
+    5,
+    10,
+    20,
+    40,
+    80,
+    128
+  ],
+  "quality_weights": [
+    0.5,
+    0.35,
+    0.15
+  ],
+  "quality_grid": [
+    [
+      0.5,
+      0.35,
+      0.15
+    ],
+    [
+      0.4,
+      0.45,
+      0.15
+    ],
+    [
+      0.6,
+      0.25,
+      0.15
+    ],
+    [
+      0.45,
+      0.35,
+      0.2
+    ],
+    [
+      0.55,
+      0.35,
+      0.1
+    ],
+    [
+      0.33,
+      0.34,
+      0.33
+    ],
+    [
+      0.25,
+      0.5,
+      0.25
+    ],
+    [
+      0.25,
+      0.25,
+      0.5
+    ]
+  ],
+  "gate": {
+    "confidence": 0.5,
+    "epistemic_uncertainty": 0.1,
+    "quality": 0.3
+  },
+  "pilot": {
+    "epochs": 3,
+    "batch_size": 16,
+    "hidden": 32,
+    "attention_heads": 4,
+    "transformer_layers": 1,
+    "max_train": 600,
+    "models": [
+      "rf",
+      "bigru",
+      "transformer",
+      "classical24a",
+      "classical24b"
+    ],
+    "seeds": [
+      42
+    ]
+  },
+  "full": {
+    "epochs": 40,
+    "batch_size": 32,
+    "hidden": 128,
+    "attention_heads": 4,
+    "transformer_layers": 4,
+    "max_train": null,
+    "models": [
+      "rf",
+      "bigru",
+      "transformer",
+      "classical24a",
+      "classical24b",
+      "quantum24"
+    ],
+    "seeds": [
+      42,
+      142,
+      242,
+      342,
+      442
+    ],
+    "expected_target_train_if_cohort_attained": 11700,
+    "expected_target_validation_if_cohort_attained": 2700,
+    "expected_target_test_if_cohort_attained": 3600
+  },
+  "training": {
+    "patience": 8,
+    "lr": 0.0003,
+    "weight_decay": 1e-05
+  },
+  "reporting": {
+    "bootstrap_resamples": 3000,
+    "bootstrap_seed": 20261026
+  },
+  "dataset_target": {
+    "total_eligible_objects": 18000,
+    "target_per_broad_class": 6000,
+    "nominal_per_subclass": 1500,
+    "subclasses": 12,
+    "achieved_size_must_be_reported": true,
+    "sampling_frame": "ALeRCE ZTF class-filtered ID-paginated pseudolabel cohort",
+    "collector_pages_initial": 40,
+    "collector_page_size": 500,
+    "independent_label_truth": false,
+    "true_ztf_prevalence_known": false
+  }
+}

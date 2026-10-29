@@ -1,0 +1,52 @@
+# Local environment and runtime caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+.mypy_cache/
+.ruff_cache/
+*.log
+*.before_filename_update
+
+# Large downloaded photometry and prepared arrays
+input/*.sqlite3
+input/*.sqlite3-*
+input/lightcurves/**
+!input/lightcurves/FORMAT_README.txt
+input/objects.csv
+input/objects_18000.csv
+input/objects_18000_progress.csv
+input/*.npy
+input/*.npz
+input/*.jsonl
+RESULTS_18K/
+RESULTS/
+*.npy
+*.npz
+*.joblib
+*.pt
+*.pth
+*.ckpt
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.sqlite3
+*.db
+
+# External tools, generated archives and manuscript
+/tla2tools.jar
+/*.zip
+/*.tar.gz
+/*.tar.xz
+*.pdf
+*.tex
+*.aux
+*.toc
+*.synctex.gz
+# Curated small, checked result archives are explicitly committed
+!artifacts/*.zip

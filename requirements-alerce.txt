@@ -1,0 +1,2 @@
+-r requirements.txt
+alerce>=2,<4

@@ -1,0 +1,67 @@
+{
+  "study": "AstroGuard-QFV: controlled 18K reviewer response",
+  "cohort": {
+    "eligible_light_curve_target": 18000,
+    "per_broad_class": 6000,
+    "broad_classes": [
+      "Transient",
+      "Periodic",
+      "Stochastic"
+    ],
+    "selection": "stable hash of eligible IDs within freshly queried ALeRCE class-filtered candidate frame",
+    "eligibility": "at least 20 valid photometric detections and at least 2 observation timestamps",
+    "excluded": "objects with conflicting broad-class broker pseudolabels",
+    "not_claimed": [
+      "representative ZTF stream",
+      "independently verified astronomical classes"
+    ]
+  },
+  "split": {
+    "train": 0.65,
+    "validation": 0.15,
+    "test": 0.2,
+    "random_seed": 42,
+    "group_key": "object_id"
+  },
+  "model_training": {
+    "seeds": [
+      42,
+      142,
+      242,
+      342,
+      442
+    ],
+    "epochs": 40,
+    "classic_train_objects": 11700,
+    "matched_quantum_classical_train_objects": 3000,
+    "classical_models": [
+      "rf",
+      "cnn",
+      "bigru",
+      "transformer",
+      "classical24a",
+      "classical24b"
+    ],
+    "fair_cost_models": [
+      "quantum24",
+      "classical24a",
+      "classical24b"
+    ],
+    "note": "Never compare matched-profile and full-data-profile numbers as if the training budgets match."
+  },
+  "research_statistics": {
+    "paired_bootstrap": 3000,
+    "test_predicted_on_same_object_ids": true,
+    "quality_weight_grid": 8,
+    "early_prefixes": [
+      2,
+      5,
+      10,
+      20,
+      40,
+      80,
+      128
+    ],
+    "early_prefix_limitation": "retrospective cohort preselected on at least 20 eventual detections"
+  }
+}

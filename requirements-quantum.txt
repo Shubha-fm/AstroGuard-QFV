@@ -1,0 +1,2 @@
+-r requirements.txt
+pennylane>=0.40,<0.47
