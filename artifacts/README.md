@@ -6,4 +6,4 @@
 
 This directory keeps SHA-256 hashes for the three locally retained compact evidence ZIPs in [`SHA256SUMS.txt`](SHA256SUMS.txt). Their names are listed in the repository README. A newly created cleaned `.tar.gz` archive has a different checksum and must be checked against its own SHA-256 value.
 
-Do not store the approximately 3 GB working dataset, model checkpoints, local SQLite collection state, or manuscript files in ordinary Git history. The 18K class labels are ALeRCE broker-generated pseudolabels; they are not independent astronomical ground truth.
+Do not store large local datasets and model artifacts, model checkpoints, local SQLite collection state, or manuscript files in ordinary Git history. The 18K class labels are ALeRCE broker-generated pseudolabels; they are not independent astronomical ground truth.
