@@ -1,9 +1,27 @@
-Use tlaplus/tlaplus official tla2tools.jar. Java 11+.
-Put the JAR outside the submission and set TLA2TOOLS_JAR to its path.
-Run in this folder:
-  java -cp "$TLA2TOOLS_JAR" tlc2.TLC -workers 1 -config AstroGuardActor.cfg AstroGuardActor.tla | tee Actor_corrected.log
+AstroGuard-QFV 18K: real TLA+/TLC execution instructions
 
-WARNING: TLC has NOT been run in this artifact build: the official tla2tools.jar
-was not available in the execution environment. The .tla has been source
-reviewed but has not passed a TLC syntax or model check.
-The independent_workflow_explorer.py results are Python results, NOT TLC results.
+Use an official tla2tools.jar, available separately from the TLA+ releases, and Java.
+From the GitHub repository root:
+  bash mac_run.sh verify
+
+The executable wrapper suite/verify.py runs TLC with -workers 1 -deadlock
+against these TLA+ modules and their configurations:
+  corrected: AstroGuardActor.tla / AstroGuardActor.cfg
+  gate: FaultGate.tla / FaultGate.cfg
+  stale: FaultStale.tla / FaultStale.cfg
+  retry: FaultRetry.tla / FaultRetry.cfg
+  cross-object isolation: FaultMixup.tla / FaultMixupIsolation.cfg
+
+Recorded run from 29 October 2026:
+  corrected: PASS; 423,220 generated, 69,765 distinct states
+  gate: expected NoUnsafeRelease violation; 45 distinct states
+  stale: expected FreshRelease violation; 689 distinct states
+  retry: expected RetryInvalidatesAssessment violation; 45 distinct states
+  isolation: expected ObjectIsolation violation; 5 distinct states
+
+The local matched-results ZIP contains actual TLC logs and tlc_summary.json.
+The GitHub checkout contains the models and configurations, not executed logs.
+Verify which records were deposited at https://doi.org/10.5281/zenodo.23770646.
+
+The -deadlock flag DISABLES deadlock checking. These bounded checks do not
+establish deadlock freedom, real-time broker safety or classifier accuracy.

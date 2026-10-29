@@ -2,7 +2,7 @@
 
 Reproducibility code, with a linked research-data archive, for **AstroGuard-QFV**, a quantum-classical and formal-assurance study of astronomical light-curve classification.
 
-This repository contains the **fresh macOS 18,000-object experiment**. It replaces earlier prototype scripts and placeholder output tables. The 3 GB light-curve dataset, memory-mapped arrays, raw checkpoints, and optional model weights are intentionally **not stored in ordinary Git history**.
+This repository contains the **fresh macOS 18,000-object experiment**. It replaces earlier prototype scripts and placeholder output tables. Downloaded photometry, memory-mapped arrays, model checkpoints and large outputs are intentionally **not stored in ordinary Git history**. The author's 29 October Mac checks reported about 309 MB in `input/`, 1.4 GB in `RESULTS_18K/`, and 521 MB in the compressed combined archive; these figures should not be called a measured 3 GB raw-light-curve dataset.
 
 ## Experiment status (29 October 2026)
 
@@ -65,7 +65,7 @@ Running `query` or `collect` accesses the ALeRCE service and downloads real ligh
 
 **Matched study** (3,000 train per model; the same validation/test cohort): mean test macro-F1 was Classical24b **0.7710**, Classical24a **0.7659**, and Quantum24 **0.7625**. Do not compare the matched-study results to 11,700-object classical baselines as if they used the same training budget.
 
-The exact per-seed metrics, held-out predictions, early-prefix curves, quality sensitivity and verification logs are in the archived evidence files below. Report the actual 3,601-object test size, not a rounded 3,600.
+The locally retained report ZIPs include per-seed metrics, held-out predictions, retrospective early-prefix curves, quality-weight sensitivity and TLC logs. Confirm the Zenodo file inventory before asserting that each file is publicly downloadable. Report the actual 3,601-object test size, not a rounded 3,600.
 
 ## Research data and experimental evidence
 

@@ -1,8 +1,6 @@
 # AstroGuard-QFV: fresh 18,000-object experiment for macOS
 
-This is a **new 18K study**, not a resumption of the 240K Windows project.
-It creates a new SQLite database on your Mac. The archive contains code and
-empty data directories, not real astronomical observations or new model results.
+This is the **reproduction guide for the completed 18K study**, not a resumption of the older 240K Windows project. This GitHub checkout contains code and input templates, not raw observations or trained model files. The author supplied the research DOI https://doi.org/10.5281/zenodo.23770646; verify its file list independently.
 Use Terminal on an Intel or Apple Silicon Mac.
 
 ## A. Set up macOS
@@ -105,15 +103,13 @@ PYTHON_SNIPPET
 bash mac_run.sh prepare
 ```
 
-When all 18,000 objects have passed checks, `input/objects_18000.csv` and its
-SHA-256 are frozen. Expected split:
+The completed 18,000-object Mac experiment reported the **measured object-disjoint split**:
 
-- Training: **11,700** objects (65%)
-- Validation: **2,700** objects (15%)
-- Testing: **3,600** objects (20%)
+- Training: **11,700** objects
+- Validation: **2,699** objects
+- Testing: **3,601** objects
 
-These are intended sizes, not completed measurements. Verify the actual
-counts in `RESULTS_18K/prepared/dataset_report.json`.
+The archived manifest SHA-256 was reported as `17880650d5f02b7d3b03cf76c20bf769bbe635156f2c02a864dafdb759080828`. Check the local frozen manifest and `RESULTS_18K/prepared/dataset_report.json` when reproducing the study.
 
 ## E. Classical baselines and statistical analysis
 
@@ -165,7 +161,7 @@ A separate independently confirmed label evaluation is available via
 `run_18k_external_labels.py`. It requires a real external catalog with
 provenance; broker predictions do not count as independent confirmation.
 
-## H. Files to send back
+## H. Locally retained evidence packages
 
 - `RESULTS_18K/AstroGuard_QFV_18K_Collection_Summary.zip`
 - `RESULTS_18K/classical/AstroGuard_QFV_18K_Classical_Results.zip`
@@ -176,7 +172,5 @@ provenance; broker predictions do not count as independent confirmation.
 Class-filtered ZTF samples cannot establish natural alert prevalence.
 Objects must have 20 valid detections to enter the main cohort. Evaluating
 early prefixes from those objects does not establish accuracy for genuinely
-new low-detection alerts. Quality-weight sweeps and statistical confidence
-intervals must be computed using actual held-out predictions; do not invent
-results. Separate independently validated labels and a natural-prevalence
+new low-detection alerts. Quality-weight sweeps and paired comparisons have been computed from actual held-out predictions in the locally retained archives. The quality-weight sweep uses confidence, quality and source checks with fixed predictions; it does not measure a combined ensemble-disagreement release gate or a deployed alert broker. Separate independently validated labels and a natural-prevalence
 alert cohort are still necessary to fully address reviewer concerns.
